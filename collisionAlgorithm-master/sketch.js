@@ -1,15 +1,16 @@
 var wall, car;
 var speed,weight,deformation;
-function setup() {
-  createCanvas(1200,800);
-  wall = createSprite(1500, 200, 60, height/2);
-  car = createSprite(50,200,50,50);
-  car.shapeColor = "grey";
-  movingRect.debug = true;
 
-  var speed = random(55,90);
-  var weight = random(400,1500)
-  var deformation = (0.5*weight*speed*speed)/22500
+function setup() {
+  createCanvas(1500,800);
+  wall = createSprite (1200, 400, 60, height/2);
+  car = createSprite (500,400,50,50)
+  car.shapeColor = "grey";
+  
+
+  speed = random(55,90);
+  weight = random(400,1500)
+  deformation = (0.5*weight*speed*speed)/22500
   
 }
 
@@ -18,21 +19,26 @@ function draw() {
   
   car.velocityX = speed;
 
-  if (isTouching(car,wall) && deformation < 100){
-  car.shapeColor = "green";
-  car.velocityX = 0;
- }
-else {
-  if (isTouching(car,wall) && deformation > 180){
-    car.shapeColor = "red";
+  if (isTouching(car,wall) && deformation < 80){
+    car.shapeColor = "green";
     car.velocityX = 0;
-   }
-   else {
-      car.shapeColor = "yellow"
-      car.velocity = 0;
-   }
+  }
+  else{
+    if (isTouching(car,wall) && deformation > 180){
+      car.shapeColor = "red";
+      car.velocityX = 0;    
+    }
+    else{
+      if (isTouching(car,wall)){
+        car.shapeColor = "yellow";
+        car.velocityX = 0;    
+      } 
+    }
+  }
 
-}
+
+  
+
   drawSprites();
 }
 
@@ -43,7 +49,7 @@ function isTouching(object1,object2){
     && object2.y - object1.y < object2.height/2 + object1.height/2) {
       return true;
 }
-else {
-  return false;
-}
+  else {
+    return false;
+  }
 }
